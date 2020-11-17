@@ -1,9 +1,8 @@
 package postgres
 
 import (
+	"database/sql"
 	"fmt"
-
-	"github.com/jmoiron/sqlx"
 )
 
 // ConnectionConfig defines Postgres database connection information
@@ -37,9 +36,32 @@ func BuildConnectionURI(cc ConnectionConfig) string {
 	return url
 }
 
-// MustConnect wraps sqlx MustConnect, using ConnectionConfig
-// Connects to a database and panics on error
-func MustConnect(cc ConnectionConfig) *sqlx.DB {
+// MustConnect mimics sqlx MustConnect, but for sql.DB, using ConnectionConfig
+// Opens connection to a DB, pings, and panics on error
+func MustConnect(cc ConnectionConfig) *sql.DB {
 	uri := BuildConnectionURI(cc)
-	return sqlx.MustConnect("postgres", uri)
+
+	db, err := sql.Open("postgres", uri)
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		_ = db.Close()
+		panic(err)
+	}
+	return db
+}
+
+// MustOpen mimics sqlx MustOpen, but for sql.DB, using ConnectionConfig
+// Opens connection to a DB and panics on error
+func MustOpen(cc ConnectionConfig) *sql.DB {
+	uri := BuildConnectionURI(cc)
+
+	db, err := sql.Open("postgres", uri)
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
