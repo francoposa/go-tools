@@ -1,11 +1,10 @@
 package postgres
 
 import (
-	"database/sql"
 	"fmt"
 )
 
-// ConnectionConfig defines Postgres database connection information
+// ConnectionConfig defines Postgres database_sql connection parameters
 type ConnectionConfig struct {
 	Host                  string
 	Port                  uint16
@@ -30,38 +29,9 @@ func BuildConnectionURI(cc ConnectionConfig) string {
 		cc.Host,
 		cc.Port,
 		cc.Database,
+		cc.ApplicationName,
 		cc.ConnectTimeoutSeconds,
 		cc.SSLMode,
 	)
 	return url
-}
-
-// MustConnect mimics sqlx MustConnect, but for sql.DB, using ConnectionConfig
-// Opens connection to a DB, pings, and panics on error
-func MustConnect(cc ConnectionConfig) *sql.DB {
-	uri := BuildConnectionURI(cc)
-
-	db, err := sql.Open("postgres", uri)
-	if err != nil {
-		panic(err)
-	}
-
-	err = db.Ping()
-	if err != nil {
-		_ = db.Close()
-		panic(err)
-	}
-	return db
-}
-
-// MustOpen mimics sqlx MustOpen, but for sql.DB, using ConnectionConfig
-// Opens connection to a DB and panics on error
-func MustOpen(cc ConnectionConfig) *sql.DB {
-	uri := BuildConnectionURI(cc)
-
-	db, err := sql.Open("postgres", uri)
-	if err != nil {
-		panic(err)
-	}
-	return db
 }
