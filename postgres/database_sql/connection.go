@@ -9,10 +9,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// MustOpen mimics sqlx MustOpen, but for sql.DB, using ConnectionConfig
+// MustOpen mimics sqlx MustOpen, but for sql.DB, using Config
 // Opens connection to a DB and panics on error
-func MustOpen(cc postgres.ConnectionConfig) *sql.DB {
-	uri := postgres.BuildConnectionURI(cc)
+func MustOpen(config postgres.Config) *sql.DB {
+	uri := postgres.BuildConnectionURI(config)
 
 	db, err := sql.Open("postgres", uri)
 	if err != nil {
@@ -21,10 +21,10 @@ func MustOpen(cc postgres.ConnectionConfig) *sql.DB {
 	return db
 }
 
-// MustConnect mimics sqlx MustConnect, but for sql.DB, using ConnectionConfig
+// MustConnect mimics sqlx MustConnect, but for sql.DB, using Config
 // Opens connection to a DB, pings, and panics on error
-func MustConnect(cc postgres.ConnectionConfig) *sql.DB {
-	uri := postgres.BuildConnectionURI(cc)
+func MustConnect(config postgres.Config) *sql.DB {
+	uri := postgres.BuildConnectionURI(config)
 
 	db, err := sql.Open("postgres", uri)
 	if err != nil {

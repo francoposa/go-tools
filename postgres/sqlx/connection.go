@@ -6,16 +6,16 @@ import (
 	"github.com/francoposa/go-tools/postgres"
 )
 
-// MustOpen wraps sqlx MustOpen, using ConnectionConfig
+// MustOpen wraps sqlx MustOpen, using Config
 // Opens connection to a DB and panics on error
-func MustOpen(cc postgres.ConnectionConfig) *sqlx.DB {
-	uri := postgres.BuildConnectionURI(cc)
+func MustOpen(config postgres.Config) *sqlx.DB {
+	uri := postgres.BuildConnectionURI(config)
 	return sqlx.MustOpen("postgres", uri)
 }
 
-// MustConnect wraps sqlx MustConnect, using ConnectionConfig
+// MustConnect wraps sqlx MustConnect, using Config
 // Opens connection to a DB, pings, and panics on error
-func MustConnect(cc postgres.ConnectionConfig) *sqlx.DB {
-	uri := postgres.BuildConnectionURI(cc)
+func MustConnect(config postgres.Config) *sqlx.DB {
+	uri := postgres.BuildConnectionURI(config)
 	return sqlx.MustConnect("postgres", uri)
 }

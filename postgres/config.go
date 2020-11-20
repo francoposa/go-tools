@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-// ConnectionConfig defines Postgres database_sql connection parameters
-type ConnectionConfig struct {
+// Config defines Postgres database_sql connection parameters
+type Config struct {
 	Host                  string
 	Port                  uint16
 	Username              string
@@ -16,9 +16,9 @@ type ConnectionConfig struct {
 	SSLMode               string
 }
 
-// BuildConnectionURI builds a connection string for lib/pq from ConnectionConfig.
+// BuildConnectionURI builds a connection string for lib/pq from Config.
 // If a missing or invalid field is provided, an error is returned.
-func BuildConnectionURI(cc ConnectionConfig) string {
+func BuildConnectionURI(cc Config) string {
 	auth := ""
 	if cc.Username != "" || cc.Password != "" {
 		auth = fmt.Sprintf("%s:%s@", cc.Username, cc.Password)

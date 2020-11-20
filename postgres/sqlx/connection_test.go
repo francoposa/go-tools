@@ -12,14 +12,14 @@ import (
 )
 
 func TestMustOpen(t *testing.T) {
-	config := postgres.ConnectionConfig{
+	config := postgres.Config{
 		Host:                  "localhost",
 		Port:                  5432,
 		Username:              "postgres",
 		Password:              "",
 		Database:              "postgres",
 		ApplicationName:       "",
-		ConnectTimeoutSeconds: 0,
+		ConnectTimeoutSeconds: 5,
 		SSLMode:               "disable",
 	}
 	db := MustOpen(config)
@@ -27,14 +27,14 @@ func TestMustOpen(t *testing.T) {
 }
 
 func TestMustConnect(t *testing.T) {
-	config := postgres.ConnectionConfig{
+	config := postgres.Config{
 		Host:                  "localhost",
 		Port:                  5432,
 		Username:              "postgres",
 		Password:              "",
 		Database:              "postgres",
 		ApplicationName:       "",
-		ConnectTimeoutSeconds: 0,
+		ConnectTimeoutSeconds: 5,
 		SSLMode:               "disable",
 	}
 	db := MustConnect(config)
