@@ -3,25 +3,13 @@ package database_sql
 import (
 	"database/sql"
 	"fmt"
-	"math/rand"
 	"testing"
-	"time"
 
 	"github.com/francoposa/go-tools/postgres"
 )
 
 var createDB = `CREATE DATABASE %s`
 var dropDB = `DROP DATABASE %s`
-
-// Create random database name to avoid collisions in parallel tests
-func RandomDBName(dbNamePrefix string) string {
-	rand.Seed(time.Now().UnixNano())
-	return fmt.Sprintf(
-		"%s_%d",
-		dbNamePrefix,
-		rand.Int(),
-	)
-}
 
 func CreateDB(t *testing.T, dbName string, superUserConfig postgres.Config) (*sql.DB, error) {
 	t.Helper()

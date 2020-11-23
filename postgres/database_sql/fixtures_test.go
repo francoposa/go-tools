@@ -21,7 +21,7 @@ func TestSetUpAndTearDownDB(t *testing.T) {
 		SSLMode:               "disable",
 	}
 
-	testDBName := RandomDBName("sql_tools_test")
+	testDBName := postgres.RandomDBName("sql_tools_test")
 
 	testDB, err := CreateDB(t, testDBName, superUserPGConfig)
 	if err != nil {
