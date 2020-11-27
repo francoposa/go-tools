@@ -7,7 +7,7 @@ import (
 // Config defines Postgres database_sql connection parameters
 type Config struct {
 	Host                  string
-	Port                  uint16
+	Port                  int
 	Username              string
 	Password              string
 	Database              string
